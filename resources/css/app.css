@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+
+@source "../views";
+
+@theme {
+
+    --color-primary: #AF241C;
+    --color-secondary: #084B97;
+    --color-background: #FAFAFA;
+    --font-poppins : 'Poppins', sans-serif;
+    --font-dancing : 'Dancing Script', cursive;
+    --font-raleway : 'Raleway', sans-serif;
+    --font-mulish : 'Mulish', sans-serif;
+    --font-inter : 'Inter', sans-serif;
+    --color-border : #7C6A46;
+}
