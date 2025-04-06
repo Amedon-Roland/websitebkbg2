@@ -1,6 +1,6 @@
 {{-- filepath: resources/views/components/header.blade.php --}}
 <header class="bg-white h-[120px] shadow-md">
-    <div class="container mx-auto flex items-center justify-between h-full px-4 md:px-8">
+    <div class="container mx-auto flex items-center justify-between h-full md:px-8">
         {{-- Logo --}}
         <div class="flex items-center">
             <img src="{{ asset('images/logobkbg.png') }}" alt="Logo" class="h-[80px] w-auto">

@@ -16,3 +16,8 @@
 }
 
 
+@media (max-width: 1250px) {
+    .hide-on-small {
+        display: none;
+    }
+}
