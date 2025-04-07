@@ -33,6 +33,8 @@
 </div>
 </div>
 
+
+
 <div class="mt-16 px-6 md:px-12 lg:px-24 mb-5">
     <h2 class="text-3xl md:text-4xl font-medium font-poppins text-center text-black mb-4">Nos installations</h2>
     <p class="text-center font-medium font-poppins text-black mb-8">
@@ -122,4 +124,5 @@ L   orem ipsum dolor sit amet consectetur adipisicing elit. Veniam est sit conse
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus non eum laboriosam fugit natus incidunt eaque ab suscipit nesciunt cupiditate, commodi officiis explicabo tempora fuga vero doloribus sed ut distinctio.
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam est sit coest sit consequatur tempore itaque a, dolores consectetur at molestiae expedita beatae delectus quibusdam ipsum, facere voluptatum saepe iusto velit magnam.eptionnel...', 'image' => '/images/im.jpg', 'author' => 'Jamiyu Aliyu']
     ]" />
+
 @endsection
