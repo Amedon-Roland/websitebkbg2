@@ -16,10 +16,10 @@
     </div>
 
     <!-- Navigation buttons -->
-    <div class="swiper-button-next absolute top-1/2 right-4 transform -translate-y-1/2 bg-grey-500 text-white rounded-full w-8 h-8 flex justify-center items-center cursor-pointer hover:bg-gray-300">
+    <div class="swiper-button-next absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 text-white rounded-full w-8 h-8 flex justify-center items-center cursor-pointer hover:bg-gray-600">
         ❯
     </div>
-    <div class="swiper-button-prev absolute top-1/2 left-4 transform -translate-y-1/2 bg-grey-500 text-white rounded-full w-8 h-8 flex justify-center items-center cursor-pointer hover:bg-gray-300">
+    <div class="swiper-button-prev absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 text-white rounded-full w-8 h-8 flex justify-center items-center cursor-pointer hover:bg-gray-600">
         ❮
     </div>
 </div>
@@ -32,8 +32,22 @@
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
-        slidesPerView: 3,
         spaceBetween: 10,
+        breakpoints: {
+            // Configuration pour les différents écrans
+            320: { // Petits écrans (mobile)
+                slidesPerView: 1,
+                spaceBetween: 10,
+            },
+            640: { // Tablettes
+                slidesPerView: 2,
+                spaceBetween: 15,
+            },
+            1024: { // Écrans moyens et grands
+                slidesPerView: 3,
+                spaceBetween: 20,
+            },
+        },
     });
 </script>
 
@@ -48,14 +62,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 470px; 
-        height: 486px;
     }
 
-    .testimony-card {
-        width: 470px;
-        height: 486px;
-        border-radius: 10px;
-        overflow: hidden; 
+    .swiper-button-next,
+    .swiper-button-prev {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 </style>
