@@ -1,5 +1,5 @@
 {{-- filepath: resources/views/components/reservation-form.blade.php --}}
-<div class="flex  font-poppins items-center w-[1270px] h-[120px] justify-between bg-white p-6 shadow-md">
+<div class="flex hide-on-small font-poppins items-center w-full h-[120px] justify-between bg-white p-6 shadow-md ">
     {{-- Location --}}
 
     <div class="flex items-start  gap-4">
