@@ -3,6 +3,7 @@
 <div class="flex flex-col items-center justify-center h-screen bg-cover bg-center" style="background-image: url('{{ asset('images/background.jpg') }}');">
 
    {{-- Profile Card --}}
+
   
     <x-carousel-testimonies-card :testimonies="[
     ['date' => '2 Mars 2023', 
@@ -45,6 +46,14 @@ L   orem ipsum dolor sit amet consectetur adipisicing elit. Veniam est sit conse
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus non eum laboriosam fugit natus incidunt eaque ab suscipit nesciunt cupiditate, commodi officiis explicabo tempora fuga vero doloribus sed ut distinctio.
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam est sit coest sit consequatur tempore itaque a, dolores consectetur at molestiae expedita beatae delectus quibusdam ipsum, facere voluptatum saepe iusto velit magnam.eptionnel...', 'image' => '/images/im.jpg', 'author' => 'Jamiyu Aliyu']
     ]" />  
+
+
+
+
+  {{-- Reservation Form --}}
+  <div class="mt-8 flex items-center justify-center">
+    <x-reservation-form />
+</div>
 
 </div>
 @endsection
