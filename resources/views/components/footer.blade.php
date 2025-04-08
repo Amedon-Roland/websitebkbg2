@@ -1,7 +1,7 @@
 {{-- filepath: resources/views/components/footer.blade.php --}}
 <footer class="bg-secondary text-white">
     {{-- Footer Container --}}
-    <div class="container pt-15 font-raleway mx-auto flex flex-col md:flex-row items-start justify-between py-8 px-4 md:px-8 gap-8 h-full">
+    <div  class="container pt-15 font-raleway mx-auto flex flex-col md:flex-row items-start justify-between py-8 px-4 md:px-8 gap-8 h-full">
         {{-- Footer Title --}}
         <div class="flex-shrink-0 md:w-1/4">
             <x-footer-title/>
