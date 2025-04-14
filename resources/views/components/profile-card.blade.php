@@ -13,16 +13,18 @@
             role="Manager"
         />
 --}}
-<div class="relative w-[458px] h-[513px] flex flex-col items-center">
+<div class="relative w-[458px] h-[513px] max-w-[380px] max-w-[380px]flex flex-col items-center mt-6 mb-6">
     {{-- Red Background Frame --}}
     <div class="absolute bottom-6 left-6 w-[458px] h-[513px] bg-primary"></div>
 
     {{-- Profile Image --}}
     <img src="{{ $image }}" alt="{{ $name }}" class="relative w-[458px] h-[513px] object-cover shadow-md">
 
-    {{-- Name and Role --}}
-    <div class="mt-4 text-center font-mulish">
+{{-- Name and Role --}}
+    <div class="mt-4 mb-16 text-center font-mulish">
         <p class="text-lg font-bold text-black">{{ $name }}</p>
         <p class="text-sm text-black">{{ $role }}</p>
     </div>
+
 </div>
+
