@@ -1,6 +1,4 @@
 @extends('layout')
-
-
 @section('content')
 
 <x-image-hero-section
@@ -11,5 +9,7 @@
                     perfect luxury bedroom design."
     :showScrollButton="false"
 />
+
+<x-contact-form />
 
 @endsection
