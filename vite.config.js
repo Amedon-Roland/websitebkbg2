@@ -16,4 +16,5 @@ export default defineConfig({
             host: "192.168.1.65", // Your IP address for Hot Module Replacement
         },
     },
+
 });
