@@ -13,8 +13,7 @@ export default defineConfig({
     server: {
         host: "0.0.0.0", // Listen on all available network interfaces
         hmr: {
-            host: "192.168.1.65", // Your IP address for Hot Module Replacement
+            host: "localhost", // Use localhost for HMR
         },
     },
-
 });

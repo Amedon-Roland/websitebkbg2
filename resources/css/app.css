@@ -1,29 +1,26 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source "../views";
 
 @theme {
-
-    --color-primary: #AF241C;
-    --color-secondary: #084B97;
-    --color-background: #FAFAFA;
-    --font-poppins: 'Poppins', sans-serif;
-    --font-dancing: 'Dancing Script', cursive;
-    --font-raleway: 'Raleway', sans-serif;
-    --font-mulish: 'Mulish', sans-serif;
-    --font-inter: 'Inter', sans-serif;
-    --color-border: #7C6A46;
+    --color-primary: #af241c;
+    --color-secondary: #084b97;
+    --color-background: #fafafa;
+    --font-poppins: "Poppins", sans-serif;
+    --font-dancing: "Dancing Script", cursive;
+    --font-raleway: "Raleway", sans-serif;
+    --font-mulish: "Mulish", sans-serif;
+    --font-inter: "Inter", sans-serif;
+    --color-border: #7c6a46;
+    --breakpoint-lg: 1090px;
 }
-
 
 html {
     scroll-behavior: smooth;
 }
-
 
 @media (max-width: 1250px) {
     .hide-on-small {
         display: none;
     }
 }
-
