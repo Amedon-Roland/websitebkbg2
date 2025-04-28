@@ -13,44 +13,20 @@ scrollTarget="section-id"
 {{-- Section des chambres --}}
 <section id="section-id" class="py-16 bg-gray-100">
     <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center text-primary mb-8">Nos Chambres</h2>
         <div class="flex flex-wrap justify-center gap-8">
-            {{-- Exemple de cartes de chambres --}}
-            <x-room-card
-                image="{{ asset('images/room.jpg') }}"
-                title="Premium"
-                availability="Available: Yes"
-                price="80.000"
-            />
-            <x-room-card
-                image="{{ asset('images/room.jpg') }}"
-                title="Privilege"
-                availability="Available: Yes"
-                price="70.000"
-            />
-            <x-room-card
-                image="{{ asset('images/room.jpg') }}"
-                title="Senior"
-                availability="Available: Yes"
-                price="65.000"
-            />
-            <x-room-card
-                image="{{ asset('images/room.jpg') }}"
-                title="Standard"
-                availability="Available: Yes"
-                price="50.000"
-            />
-            <x-room-card
-                image="{{ asset('images/room.jpg') }}"
-                title="Junior"
-                availability="Available: Yes"
-                price="35.000"
-            />
-            <x-room-card
-                image="{{ asset('images/room.jpg') }}"
-                title="The Royal Room"
-                availability="Available: Yes"
-                price="190.000"
-            />
+            @forelse($rooms as $room)
+                <x-room-card
+                    image="{{ $room->image ? asset('storage/' . $room->image) : asset('images/room.jpg') }}"
+                    title="{{ $room->title }}"
+                    availability="{{ $room->availability_text }}"
+                    price="{{ number_format($room->price, 3, '.', '') }}"
+                />
+            @empty
+                <div class="text-center py-12">
+                    <p class="text-lg text-gray-600">Aucune chambre disponible pour le moment.</p>
+                </div>
+            @endforelse
         </div>
     </div>
 </section>

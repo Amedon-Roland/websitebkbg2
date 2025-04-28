@@ -13,9 +13,8 @@ Route::get('/explorer', function () {
 })->name('explorer');
 
 // Route pour la page Chambres
-Route::get('/chambres', function () {
-    return view('chambres');
-})->name('chambres');
+
+Route::get('/chambres', [App\Http\Controllers\RoomController::class, 'index'])->name('chambres');
 
 // Route pour la page À propos
 Route::get('/about', function () {
