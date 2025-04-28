@@ -72,7 +72,7 @@
     {{-- Grid pour mobile, flex-wrap pour desktop --}}
     <div class="grid grid-cols-4 gap-y-6 lg:flex lg:flex-wrap lg:justify-center lg:gap-6 max-w-screen-lg mx-auto px-2">
         <x-installation-card icon="{{ asset('icons/swim.svg') }}" title="Piscine" />
-        <x-installation-card icon="{{ asset('icons/wifi.svg') }}" title="Wifi" />
+        <x-installation-card icon="{{ asset('icons/wifi2.svg') }}" title="Wifi" />
         <x-installation-card icon="{{ asset('icons/dejeuner.svg') }}" title="Petit déjeuner" />
         <x-installation-card icon="{{ asset('icons/gym.svg') }}" title="Gymme" />
         <x-installation-card icon="{{ asset('icons/game.svg') }}" title="Centre de jeu" />
