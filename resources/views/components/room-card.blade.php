@@ -1,4 +1,5 @@
 {{-- filepath: resources/views/components/room-card.blade.php --}}
+
 <div class="w-[390px] h-[414px] bg-white  shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
     {{-- Image --}}
     <img src="{{ $image }}" alt="Room Image" class="w-full h-[250px] object-cover">
@@ -25,3 +26,4 @@
         <x-button width="143px" height="47px" cornerRadius="0px" fontweight="" >Réserver</x-button>
     </div>
 </div>
+
