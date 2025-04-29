@@ -10,10 +10,5 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    server: {
-        host: "0.0.0.0", // Listen on all available network interfaces
-        hmr: {
-            host: "localhost", // Use localhost for HMR
-        },
-    },
+
 });
