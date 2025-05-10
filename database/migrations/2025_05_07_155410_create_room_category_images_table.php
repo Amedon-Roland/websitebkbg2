@@ -8,17 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('room_category_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('room_category_id')->constrained()->onDelete('cascade');
-            $table->integer('room_number');
-            $table->boolean('is_available')->default(true);
+            $table->string('image');
+            $table->string('caption')->nullable();
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('room_category_images');
     }
 };

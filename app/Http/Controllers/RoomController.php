@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
+use App\Models\RoomCategory;
 
 class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::where('is_available', true)->get();
-        return view('chambres', compact('rooms'));
+        $categories = RoomCategory::all();
+        return view('chambres', compact('categories'));
     }
 }

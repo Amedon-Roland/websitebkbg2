@@ -17,7 +17,7 @@
         </p>
 
         <div class="flex mt-6 gap-4">
-            <a href="#" class="px-5 py-3 bg-[#C63031] text-white rounded-lg font-medium text-sm">
+            <a href="{{ route('reservations.index') }}" class="px-5 py-3 bg-[#C63031] text-white rounded-lg font-medium text-sm">
                 Réservez maintenant !
             </a>
             <a href="#" class="flex items-center justify-center">
@@ -47,8 +47,8 @@
             <p class="mt-4 text-sm font-medium font-raleway text-gray-600">
                 Chaque instant semble être la première fois <br> dans une vue paradisiaque.
             </p>
-            <a href="#" class="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-secondary text-white rounded-lg shadow-md">
-                Visite Virtuelle
+            <a href="{{ route('reservations.index') }}" class="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg shadow-md">
+                Réservez maintenant
             </a>
         </div>
     </div>

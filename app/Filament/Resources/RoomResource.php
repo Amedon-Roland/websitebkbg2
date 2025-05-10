@@ -4,48 +4,32 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoomResource\Pages;
 use App\Models\Room;
-use Filament\Forms;
+use App\Models\RoomCategory;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables;
+use Filament\Forms;
 
 class RoomResource extends Resource
 {
     protected static ?string $model = Room::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-home';
-
-    protected static ?string $navigationGroup = 'Hôtel Management';
+    
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('room_category_id')
+                    ->label('Room Category')
+                    ->options(RoomCategory::all()->pluck('name', 'id'))
+                    ->required(),
                 Forms\Components\TextInput::make('room_number')
-                    ->numeric()
-                    ->label('Room Number'),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->directory('rooms')
-                    ->label('Room Image')
-                    ->columnSpanFull(),
-                Forms\Components\Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('price')
                     ->required()
-                    ->numeric()
-                    ->prefix('FCFA'),
-                Forms\Components\TextInput::make('capacity')
-                    ->required()
-                    ->numeric()
-                    ->default(2),
+                    ->numeric(),
                 Forms\Components\Toggle::make('is_available')
-                    ->label('Available')
+                    ->label('Is Available')
                     ->default(true),
             ]);
     }
@@ -54,40 +38,20 @@ class RoomResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('room_number')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('price')
-                    ->money('XAF')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('room_number'),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Category'),
                 Tables\Columns\IconColumn::make('is_available')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('is_available')
-                    ->options([
-                        '1' => 'Available',
-                        '0' => 'Not Available',
-                    ]),
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
