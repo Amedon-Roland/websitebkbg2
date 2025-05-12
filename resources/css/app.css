@@ -1,16 +1,61 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source "../views";
 
 @theme {
+    --color-primary: #af241c;
+    --color-secondary: #084b97;
+    --color-background: #fafafa;
+    --font-poppins: "Poppins", sans-serif;
+    --font-dancing: "Dancing Script", cursive;
+    --font-raleway: "Raleway", sans-serif;
+    --font-mulish: "Mulish", sans-serif;
+    --font-inter: "Inter", sans-serif;
+    --color-border: #7c6a46;
+    --breakpoint-lg: 1090px;
+}
 
-    --color-primary: #AF241C;
-    --color-secondary: #084B97;
-    --color-background: #FAFAFA;
-    --font-poppins : 'Poppins', sans-serif;
-    --font-dancing : 'Dancing Script', cursive;
-    --font-raleway : 'Raleway', sans-serif;
-    --font-mulish : 'Mulish', sans-serif;
-    --font-inter : 'Inter', sans-serif;
-    --color-border : #7C6A46;
+html {
+    scroll-behavior: smooth;
+}
+
+@media (max-width: 1250px) {
+    .hide-on-small {
+        display: none;
+    }
+}
+
+/* Animations pour la galerie */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Style de la barre de défilement des miniatures */
+.scrollbar-thin {
+    scrollbar-width: thin; /* For Firefox */
+}
+.scrollbar-thin::-webkit-scrollbar {
+    width: 8px; /* For Chrome, Safari, and Edge */
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #9ca3af;
+    border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+    background-color: #e5e7eb;
+}
+.scrollbar-thumb-gray-400::-webkit-scrollbar-thumb {
+    background-color: #9ca3af;
+    border-radius: 9999px;
+}
+.scrollbar-track-gray-200::-webkit-scrollbar-track {
+    background-color: #e5e7eb;
+}
+.scrollbar-thin::-webkit-scrollbar {
+    height: 8px;
 }
