@@ -18,6 +18,7 @@
                 image="{{ asset('images/im.jpg') }}" 
                 name="Chidinma James" 
                 role="Manager" 
+                
             />
         </div>
 

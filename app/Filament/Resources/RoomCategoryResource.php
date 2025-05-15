@@ -28,13 +28,6 @@ class RoomCategoryResource extends Resource
                     ->directory('room-categories')
                     ->image()
                     ->label('Image principale'),
-                Forms\Components\FileUpload::make('gallery')
-                    ->directory('room-categories-gallery')
-                    ->image()
-                    ->multiple()
-                    ->maxFiles(10)
-                    ->label('Galerie d\'images')
-                    ->helperText('Ajoutez plusieurs photos pour la galerie (max 10)'),
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
@@ -73,7 +66,7 @@ class RoomCategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            \App\Filament\Resources\RoomCategoryResource\RelationManagers\ImagesRelationManager::class,
         ];
     }
 

@@ -13,7 +13,7 @@ export default defineConfig({
     server: {
         host: "0.0.0.0", // Listen on all available network interfaces
         hmr: {
-            host: "192.168.1.72", // Use localhost for HMR
+            host: "rolandtech.local", // Use localhost for HMR
         },
     },
 });
