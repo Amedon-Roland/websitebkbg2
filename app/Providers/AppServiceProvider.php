@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Reservation;
 use App\Models\RoomCategory;
 use App\Observers\RoomCategoryObserver;
+use App\Observers\ReservationObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,5 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RoomCategory::observe(RoomCategoryObserver::class);
+        Reservation::observe(ReservationObserver::class);
     }
 }

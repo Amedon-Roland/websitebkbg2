@@ -46,11 +46,13 @@ class RoomCategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('price')->money('USD'),
+                Tables\Columns\TextColumn::make('price')->money('XAF'), // Utiliser XAF pour FCFA
                 Tables\Columns\TextColumn::make('capacity'),
-                Tables\Columns\TextColumn::make('getAvailableRoomsCount')
-                    ->label('Available Rooms')
-                    ->getStateUsing(fn (RoomCategory $record): int => $record->getAvailableRoomsCount()),
+                Tables\Columns\TextColumn::make('available_rooms')
+                    ->label('Chambres disponibles')
+                    ->getStateUsing(function (RoomCategory $record): int {
+                        return $record->rooms()->where('is_available', true)->count();
+                    }),
             ])
             ->filters([
                 //

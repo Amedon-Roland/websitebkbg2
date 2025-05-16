@@ -95,7 +95,13 @@ html {
 }
 
 @media (max-width: 1250px) {
-    .hide-on-small {
+    /* Ne plus masquer complètement .hide-on-small */
+    /* .hide-on-small {
+        display: none;
+    } */
+    
+    /* Masquer uniquement la section Personnes */
+    .hide-guests-responsive {
         display: none;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Carbon\Carbon;
 use App\Models\Room;
 
@@ -26,16 +27,30 @@ class RoomCategory extends Model
         'capacity' => 'integer',
     ];
 
+    /**
+     * Get all rooms belonging to this category
+     */
     public function rooms(): HasMany
     {
         return $this->hasMany(Room::class);
     }
-    
-    public function getAvailableRoomsCount(): int
+
+    /**
+     * Get all available rooms belonging to this category
+     */
+    public function availableRooms(): HasMany
     {
-        return $this->rooms()->where('is_available', true)->count();
+        return $this->hasMany(Room::class)->where('is_available', true);
     }
-    
+
+    /**
+     * Get all reservations for rooms in this category
+     */
+    public function reservations(): HasManyThrough
+    {
+        return $this->hasManyThrough(Reservation::class, Room::class);
+    }
+
     /**
      * Récupère les chambres disponibles pour les dates spécifiées
      */
@@ -106,5 +121,9 @@ class RoomCategory extends Model
     public function images()
     {
         return $this->hasMany(RoomCategoryImage::class);
+    }
+    public function getAvailableRoomsCount(): int
+    {
+        return $this->rooms()->where('is_available', true)->count();
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Mail\ReservationConfirmation;
+use App\Mail\ReservationNotification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 
@@ -158,6 +159,10 @@ class ReservationController extends Controller
             // Envoyer l'email de confirmation
             Mail::to($reservation->email)
                 ->send(new ReservationConfirmation($reservation, $pdfUrl));
+            
+            // Envoyer la notification à l'hôtel
+            Mail::to(env('HOTEL_NOTIFICATION_EMAIL', 'rolandamedon@gmail.com'))
+                ->send(new ReservationNotification($reservation));
             
             return redirect()->route('reservations.confirmation', ['reservation' => $reservation->uuid])
                 ->with('success', 'Votre réservation a été effectuée avec succès! Un email de confirmation a été envoyé.');

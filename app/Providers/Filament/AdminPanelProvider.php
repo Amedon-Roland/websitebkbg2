@@ -17,6 +17,13 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Widgets\RoomAvailabilityWidget;
+use App\Filament\Widgets\ReservationStatsWidget;
+use App\Filament\Widgets\RoomMapWidget;
+use App\Filament\Widgets\LatestReservationsWidget;
+use App\Filament\Widgets\ReservationChartWidget;
+use App\Filament\Widgets\RoomCategoriesWidget;
+use App\Filament\Widgets\QuickActionsWidget;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -28,17 +35,24 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            // Retirez ou commentez cette ligne pour désactiver la découverte automatique
+            // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                RoomAvailabilityWidget::class,
+                ReservationStatsWidget::class,
+                // RoomMapWidget::class, // Commenté pour masquer ce widget
+                LatestReservationsWidget::class,
+                ReservationChartWidget::class,
+                RoomCategoriesWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -50,7 +64,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-            ])
+            ])->topNavigation()
             ->authMiddleware([
                 Authenticate::class,
             ]);

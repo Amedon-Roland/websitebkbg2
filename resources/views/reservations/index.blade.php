@@ -77,6 +77,7 @@
                                 <input type="hidden" id="room_category_id" name="room_category_id" 
                                     value="{{ request()->input('room_category_id') ?: (isset($preselectedCategory) ? $preselectedCategory->id : '') }}" required>
                             </div>
+                            <div class="text-error text-xs mt-1 pl-1 error-message" id="room_category_id-error" style="display: none;">Veuillez sélectionner un type de chambre</div>
                         </div>
                         
                         <!-- Nombre de personnes avec dropdown amélioré -->
@@ -121,12 +122,12 @@
                                 <span class="label-text font-medium">Date d'arrivée</span>
                             </label>
                             <label class="input-group input-group-md">
-                                
                                 <input type="date" id="check_in_date" name="check_in_date" 
                                     value="{{ request()->input('check_in_date') ?: date('Y-m-d') }}" 
                                     min="{{ date('Y-m-d') }}" 
                                     class="input input-bordered w-full rounded-l-r focus:outline-primary" required>
                             </label>
+                            <div class="text-error text-xs mt-1 pl-1 error-message" id="check_in_date-error" style="display: none;">Veuillez sélectionner une date d'arrivée</div>
                         </div>
                         
                         <!-- Date de départ avec datepicker amélioré -->
@@ -184,6 +185,7 @@
                             </label>
                             <input type="text" id="last_name" name="last_name" 
                                 class="input input-bordered w-full focus:outline-primary" required>
+                            <div class="text-error text-xs mt-1 pl-1 error-message" id="last_name-error" style="display: none;">Veuillez saisir votre nom</div>
                         </div>
                         
                         <!-- Prénom avec style amélioré -->
@@ -487,7 +489,137 @@
             
             this.value = value;
         });
+        
+        // Form validation
+        const reservationForm = document.querySelector('form[action="{{ route('reservations.create') }}"]');
+        const errorMessages = {
+            'room_category_id': 'Veuillez sélectionner un type de chambre',
+            'guests': 'Veuillez indiquer le nombre de personnes',
+            'check_in_date': 'Veuillez sélectionner une date d\'arrivée',
+            'check_out_date': 'Veuillez sélectionner une date de départ',
+            'title': 'Veuillez sélectionner une civilité',
+            'last_name': 'Veuillez saisir votre nom',
+            'first_name': 'Veuillez saisir votre prénom',
+            'email': 'Veuillez saisir une adresse email valide',
+            'phone': 'Veuillez saisir un numéro de téléphone valide',
+            'terms_accepted': 'Vous devez accepter les termes et conditions'
+        };
+
+        // Show error message for a specific field
+        function showError(fieldId, message) {
+            const errorElement = document.getElementById(`${fieldId}-error`);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+        }
+
+        // Hide error message for a specific field
+        function hideError(fieldId) {
+            const errorElement = document.getElementById(`${fieldId}-error`);
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        // Validate email format
+        function isValidEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        // Real-time validation for each field
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            if (input.hasAttribute('required') || input.id === 'email' || input.id === 'phone') {
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+                
+                input.addEventListener('input', function() {
+                    if (this.classList.contains('is-invalid')) {
+                        validateField(this);
+                    }
+                });
+            }
+        });
+
+        // Validate a single field
+        function validateField(field) {
+            const fieldId = field.id;
+            
+            // Skip if the field doesn't have validation
+            if (!errorMessages[fieldId]) return true;
+            
+            let isValid = true;
+            
+            // Different validation rules based on field type
+            if (field.hasAttribute('required') && !field.value.trim()) {
+                showError(fieldId, errorMessages[fieldId]);
+                field.classList.add('is-invalid');
+                isValid = false;
+            } else if (fieldId === 'email' && field.value.trim() && !isValidEmail(field.value.trim())) {
+                showError(fieldId, 'Format d\'email invalide');
+                field.classList.add('is-invalid');
+                isValid = false;
+            } else if (fieldId === 'phone' && field.value.trim() && field.value.replace(/\s/g, '').length < 8) {
+                showError(fieldId, 'Numéro de téléphone incomplet');
+                field.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                hideError(fieldId);
+                field.classList.remove('is-invalid');
+            }
+            
+            return isValid;
+        }
+
+        // Form submission validation
+        reservationForm.addEventListener('submit', function(e) {
+            let formIsValid = true;
+            
+            // Validate all required fields
+            document.querySelectorAll('input[required], select[required], textarea[required], #email, #phone').forEach(field => {
+                if (!validateField(field)) {
+                    formIsValid = false;
+                }
+            });
+            
+            // Special handling for checkbox (terms)
+            const termsCheckbox = document.querySelector('input[name="terms_accepted"]');
+            if (termsCheckbox && !termsCheckbox.checked) {
+                showError('terms_accepted', errorMessages['terms_accepted']);
+                formIsValid = false;
+            }
+            
+            if (!formIsValid) {
+                e.preventDefault();
+                
+                // Scroll to the first error
+                const firstError = document.querySelector('.error-message[style="display: block"]');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
     });
 </script>
+@endpush
+
+@push('styles')
+<style>
+    input.is-invalid, textarea.is-invalid, .is-invalid .input, .is-invalid .textarea, .is-invalid .select, .is-invalid .btn {
+        border-color: hsl(var(--er)) !important;
+    }
+    
+    .error-message {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .error-message[style="display: block"] {
+        opacity: 1;
+    }
+</style>
 @endpush
 @endsection
