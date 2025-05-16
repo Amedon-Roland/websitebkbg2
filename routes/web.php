@@ -50,3 +50,5 @@ Route::get('reservations/{reservation:uuid}/pdf', [ReservationPdfController::cla
     ->name('reservations.pdf.download')
     ->middleware(['signed', \App\Http\Middleware\ValidateReservationOwner::class]);
 
+Route::post('/contact-submit', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
+
