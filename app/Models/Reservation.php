@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Reservation extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
     
     protected $fillable = [
         'title',
@@ -88,4 +89,21 @@ class Reservation extends Model
         
         return $this->total_price;
     }
+
+    public function uniqueIds()
+    {
+        return ['uuid'];
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($model) {
+            $model->uuid = (string) \Str::uuid();
+        });
+    }
 }
+
+
+

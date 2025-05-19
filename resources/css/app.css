@@ -1,4 +1,78 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  prefersdark: true;
+  color-scheme: "light";
+  --color-base-100: #fafafa;
+  --color-base-200: #fafafa;
+  --color-base-300: oklch(100% 0 0);
+  --color-base-content: oklch(0% 0 0);
+  --color-primary: #af241c;
+  --color-primary-content: oklch(98% 0.018 155.826);
+  --color-secondary: #084b97;
+  --color-secondary-content: oklch(98% 0.022 95.277);
+  --color-accent: #af241c;
+  --color-accent-content: oklch(97% 0.021 166.113);
+  --color-neutral: #084b97;
+  --color-neutral-content: oklch(98% 0.031 120.757);
+  --color-info: oklch(54% 0.245 262.881);
+  --color-info-content: oklch(97% 0.014 254.604);
+  --color-success: oklch(60% 0.118 184.704);
+  --color-success-content: oklch(98% 0.014 180.72);
+  --color-warning: oklch(64% 0.222 41.116);
+  --color-warning-content: oklch(98% 0.016 73.684);
+  --color-error: oklch(58% 0.253 17.585);
+  --color-error-content: oklch(96% 0.015 12.422);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: false;
+  prefersdark: false;
+  color-scheme: "dark";
+  --color-base-100: oklch(25.33% 0.016 252.42);
+  --color-base-200: oklch(23.26% 0.014 253.1);
+  --color-base-300: oklch(21.15% 0.012 254.09);
+  --color-base-content: oklch(97.807% 0.029 256.847);
+  --color-primary: #af241c;
+  --color-primary-content: oklch(94% 0.028 342.258);
+  --color-secondary: #084b97;
+  --color-secondary-content: oklch(94% 0.028 342.258);
+  --color-accent: #af241c;
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: #084b97;
+  --color-neutral-content: oklch(100% 0 0);
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(27% 0.105 12.094);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+
 
 @source "../views";
 
@@ -13,6 +87,7 @@
     --font-inter: "Inter", sans-serif;
     --color-border: #7c6a46;
     --breakpoint-lg: 1090px;
+    
 }
 
 html {
@@ -20,7 +95,13 @@ html {
 }
 
 @media (max-width: 1250px) {
-    .hide-on-small {
+    /* Ne plus masquer complètement .hide-on-small */
+    /* .hide-on-small {
+        display: none;
+    } */
+    
+    /* Masquer uniquement la section Personnes */
+    .hide-guests-responsive {
         display: none;
     }
 }

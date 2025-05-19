@@ -7,6 +7,10 @@ use App\Models\RoomCategory;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Mail\ReservationConfirmation;
+use App\Mail\ReservationNotification;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class ReservationController extends Controller
 {
@@ -142,8 +146,26 @@ class ReservationController extends Controller
             $reservation->calculateTotalPrice();
             $reservation->save();
             
-            return redirect()->route('reservations.confirmation', ['reservation' => $reservation->id])
-                ->with('success', 'Votre réservation a été effectuée avec succès!');
+            // Stocker l'email de la réservation en session pour l'authentification future
+            session(['reservation_email' => $reservation->email]);
+            
+            // Générer un lien signé pour le téléchargement du PDF
+            $pdfUrl = URL::temporarySignedRoute(
+                'reservations.pdf.download',
+                now()->addDays(30), // Le lien expire dans 30 jours
+                ['reservation' => $reservation->uuid]
+            );
+            
+            // Envoyer l'email de confirmation
+            Mail::to($reservation->email)
+                ->send(new ReservationConfirmation($reservation, $pdfUrl));
+            
+            // Envoyer la notification à l'hôtel
+            Mail::to(env('HOTEL_NOTIFICATION_EMAIL', 'rolandamedon@gmail.com'))
+                ->send(new ReservationNotification($reservation));
+            
+            return redirect()->route('reservations.confirmation', ['reservation' => $reservation->uuid])
+                ->with('success', 'Votre réservation a été effectuée avec succès! Un email de confirmation a été envoyé.');
                 
         } catch (\Exception $e) {
             \Log::error('Erreur lors de la réservation: ' . $e->getMessage());

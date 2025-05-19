@@ -4,17 +4,25 @@
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-5xl mx-auto">
             <div class="mb-8">
-                <a href="{{ route('reservations.index') }}" class="flex items-center text-primary hover:underline">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <a href="{{ route('reservations.index') }}" class="btn btn-ghost btn-sm gap-2 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Retour aux options de réservation
                 </a>
             </div>
+            <div class="flex justify-center mb-4">
+                <div class="steps steps-horizontal w-full max-w-md">
+                    <div class="step step-secondary">Sélection</div>
+                    <div class="step step-secondary">Confirmation</div>
+                    <div class="step">Paiement</div>
+                </div>
+            </div>
             
             <h1 class="text-3xl font-bold text-gray-800 mb-6">Confirmer votre réservation</h1>
             
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="card bg-base-100 shadow-xl overflow-hidden">
+                <!-- En-tête avec récapitulatif du séjour -->
                 <div class="bg-primary text-white p-6">
                     <h2 class="text-xl font-semibold">Récapitulatif de votre séjour</h2>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 text-sm">
@@ -56,151 +64,278 @@
                     <input type="hidden" name="check_out_date" value="{{ $validated['check_out_date'] }}">
 
                     @if($availableRooms->count() > 0)
-                        <div class="bg-green-50 p-4 rounded-md mb-6">
-                            <h3 class="text-lg text-green-800 font-medium">Chambres disponibles</h3>
-                            <p class="text-green-700 text-sm">{{ $availableRooms->count() }} chambre(s) disponible(s) pour votre séjour.</p>
+                        <div class="alert alert-success mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div>
+                                <h3 class="font-bold">Chambres disponibles</h3>
+                                <p class="text-sm">{{ $availableRooms->count() }} chambre(s) disponible(s) pour votre séjour.</p>
+                            </div>
                             
                             @if($availableRooms->count() > 1)
-                                <div class="mt-3">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Sélectionner une chambre spécifique (optionnel)</label>
-                                    <select name="room_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50">
-                                        <option value="">Attribuer automatiquement</option>
-                                        @foreach($availableRooms as $room)
-                                            <option value="{{ $room->id }}">Chambre n° {{ $room->room_number }}</option>
-                                        @endforeach
-                                    </select>
-                                    <p class="text-xs text-gray-500 mt-1">Si vous ne choisissez pas de chambre, nous vous attribuerons la meilleure disponible.</p>
+                                <div class="form-control w-full mt-3">
+                                    <label class="label">
+                                        <span class="label-text font-medium">Sélectionner une chambre spécifique (optionnel)</span>
+                                    </label>
+                                    <div class="relative w-full">
+                                        <button type="button" tabindex="0" role="button" class="select select-bordered w-full flex justify-between items-center px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary transition bg-white text-gray-800" id="room-dropdown-btn">
+                                            <span id="selected-room-text" class="truncate">Attribuer automatiquement</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+                                        </button>
+                                        <ul id="room-dropdown-list" class="absolute left-0 right-0 mt-1 z-10 menu p-2 shadow bg-base-100 text-gray-800 rounded-box w-full max-h-60 overflow-y-auto border border-base-200 transition-all duration-150 opacity-0 pointer-events-none invisible">
+                                            <li>
+                                                <a data-value="" class="room-option active flex items-center gap-2 px-2 py-2 rounded hover:bg-primary hover:text-white transition">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                    Attribuer automatiquement
+                                                </a>
+                                            </li>
+                                            @foreach($availableRooms as $room)
+                                                <li>
+                                                    <a data-value="{{ $room->id }}" class="room-option flex items-center gap-2 px-2 py-2 rounded hover:bg-primary hover:text-white transition">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-base-300 invisible group-hover:visible" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                        Chambre n° {{ $room->room_number }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" name="room_id" id="room-id-input" value="">
+                                    <label class="label">
+                                        <span class="label-text-alt">Si vous ne choisissez pas de chambre, nous vous attribuerons la meilleure disponible.</span>
+                                    </label>
                                 </div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dropdownBtn = document.getElementById('room-dropdown-btn');
+                                        const dropdownList = document.getElementById('room-dropdown-list');
+                                        const roomOptions = dropdownList.querySelectorAll('.room-option');
+                                        const selectedRoomText = document.getElementById('selected-room-text');
+                                        const roomIdInput = document.getElementById('room-id-input');
+
+                                        // Toggle dropdown
+                                        dropdownBtn.addEventListener('click', function(e) {
+                                            e.stopPropagation();
+                                            const isOpen = dropdownList.classList.contains('opacity-100');
+                                            if (!isOpen) {
+                                                dropdownList.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
+                                                dropdownList.classList.add('opacity-100');
+                                            } else {
+                                                dropdownList.classList.add('opacity-0', 'pointer-events-none', 'invisible');
+                                                dropdownList.classList.remove('opacity-100');
+                                            }
+                                        });
+
+                                        // Close dropdown on click outside
+                                        document.addEventListener('click', function(e) {
+                                            if (!dropdownBtn.contains(e.target)) {
+                                                dropdownList.classList.add('opacity-0', 'pointer-events-none', 'invisible');
+                                                dropdownList.classList.remove('opacity-100');
+                                            }
+                                        });
+
+                                        // Option selection
+                                        roomOptions.forEach(option => {
+                                            option.addEventListener('click', function(e) {
+                                                e.preventDefault();
+                                                const value = this.getAttribute('data-value');
+                                                const text = this.textContent.trim();
+
+                                                roomIdInput.value = value;
+                                                selectedRoomText.textContent = text;
+
+                                                // Update active state
+                                                roomOptions.forEach(opt => opt.classList.remove('active'));
+                                                this.classList.add('active');
+
+                                                // Close dropdown
+                                                dropdownList.classList.add('opacity-0', 'pointer-events-none', 'invisible');
+                                                dropdownList.classList.remove('opacity-100');
+                                            });
+                                        });
+                                    });
+                                </script>
                             @else
                                 <input type="hidden" name="room_id" value="{{ $availableRooms->first()->id }}">
-                                <p class="text-sm text-gray-600 mt-2">Chambre n° {{ $availableRooms->first()->room_number }} vous sera attribuée.</p>
+                                <p class="text-sm mt-2">Chambre n° {{ $availableRooms->first()->room_number }} vous sera attribuée.</p>
                             @endif
                         </div>
                     @endif
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Informations personnelles -->
-                        <div class="md:col-span-2 border-b pb-4 mb-4">
-                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Informations personnelles</h2>
+                        <div class="md:col-span-2 divider">
+                            <h2 class="text-xl font-semibold text-gray-800">Informations personnelles</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Civilité -->
+                            <div class="form-control w-full">
+                                <label class="label">
+                                    <span class="label-text">Civilité</span>
+                                </label>
+                                <div class="dropdown w-full">
+                                    <div tabindex="0" role="button" class="select select-bordered w-full flex justify-between items-center">
+                                        <span id="selected-title-text">{{ isset($validated['title']) ? ($validated['title'] == 'M.' ? 'Monsieur' : ($validated['title'] == 'Mme' ? 'Madame' : 'Mademoiselle')) : 'Sélectionnez' }}</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </div>
+                                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full">
+                                        <li><a data-value="M." class="title-option {{ isset($validated['title']) && $validated['title'] == 'M.' ? 'active' : '' }}">Monsieur</a></li>
+                                        <li><a data-value="Mme" class="title-option {{ isset($validated['title']) && $validated['title'] == 'Mme' ? 'active' : '' }}">Madame</a></li>
+                                        <li><a data-value="Mlle" class="title-option {{ isset($validated['title']) && $validated['title'] == 'Mlle' ? 'active' : '' }}">Mademoiselle</a></li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="title" id="title-input" value="{{ $validated['title'] ?? '' }}" required>
+                            </div>
                             
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <!-- Civilité -->
-                                <div>
-                                    <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Civilité</label>
-                                    <select id="title" name="title" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" required>
-                                        <option value="">Sélectionnez</option>
-                                        <option value="M." {{ isset($validated['title']) && $validated['title'] == 'M.' ? 'selected' : '' }}>Monsieur</option>
-                                        <option value="Mme" {{ isset($validated['title']) && $validated['title'] == 'Mme' ? 'selected' : '' }}>Madame</option>
-                                        <option value="Mlle" {{ isset($validated['title']) && $validated['title'] == 'Mlle' ? 'selected' : '' }}>Mademoiselle</option>
-                                    </select>
-                                </div>
-                                
-                                <!-- Nom -->
-                                <div>
-                                    <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
-                                    <input type="text" id="last_name" name="last_name" value="{{ $validated['last_name'] ?? '' }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" required>
-                                </div>
-                                
-                                <!-- Prénom -->
-                                <div>
-                                    <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
-                                    <input type="text" id="first_name" name="first_name" value="{{ $validated['first_name'] ?? '' }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" required>
-                                </div>
-                                
-                                <!-- Email -->
-                                <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                    <input type="email" id="email" name="email" value="{{ $validated['email'] ?? '' }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" required>
-                                </div>
-                                
-                                <!-- Téléphone -->
-                                <div>
-                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
-                                    <input type="tel" id="phone" name="phone" value="{{ $validated['phone'] ?? '' }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" required>
-                                </div>
-                                
-                                <!-- Adresse -->
-                                <div class="md:col-span-2">
-                                    <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
-                                    <input type="text" id="address" name="address" value="{{ $validated['address'] ?? '' }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50">
-                                </div>
+                            <!-- Nom -->
+                            <div class="form-control w-full">
+                                <label class="label">
+                                    <span class="label-text">Nom</span>
+                                </label>
+                                <input type="text" id="last_name" name="last_name" value="{{ $validated['last_name'] ?? '' }}" class="input input-bordered w-full" required>
+                            </div>
+                            
+                            <!-- Prénom -->
+                            <div class="form-control w-full">
+                                <label class="label">
+                                    <span class="label-text">Prénom</span>
+                                </label>
+                                <input type="text" id="first_name" name="first_name" value="{{ $validated['first_name'] ?? '' }}" class="input input-bordered w-full" required>
+                            </div>
+                            
+                            <!-- Email -->
+                            <div class="form-control w-full">
+                                <label class="label">
+                                    <span class="label-text">Email</span>
+                                </label>
+                                <input type="email" id="email" name="email" value="{{ $validated['email'] ?? '' }}" class="input input-bordered w-full" required>
+                            </div>
+                            
+                            <!-- Téléphone -->
+                            <div class="form-control w-full">
+                                <label class="label">
+                                    <span class="label-text">Téléphone</span>
+                                </label>
+                                <input type="tel" id="phone" name="phone" value="{{ $validated['phone'] ?? '' }}" class="input input-bordered w-full" required>
+                            </div>
+                            
+                            <!-- Adresse -->
+                            <div class="form-control w-full md:col-span-2">
+                                <label class="label">
+                                    <span class="label-text">Adresse</span>
+                                </label>
+                                <input type="text" id="address" name="address" value="{{ $validated['address'] ?? '' }}" class="input input-bordered w-full">
                             </div>
                         </div>
                         
                         <!-- Méthode de paiement -->
-                        <div class="md:col-span-2">
-                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Mode de paiement</h2>
+                        <div class="md:col-span-2 mt-6">
+                            <div class="divider">
+                                <h2 class="text-xl font-semibold text-gray-800">Mode de paiement</h2>
+                            </div>
                             
-                            <div class="space-y-3">
-                                <label class="flex items-center p-3 border rounded-md hover:bg-gray-50">
-                                    <input type="radio" name="payment_method" value="credit_card" class="h-5 w-5 text-primary" checked>
-                                    <span class="ml-3 font-medium">Carte de crédit</span>
-                                </label>
-                                
-                                <label class="flex items-center p-3 border rounded-md hover:bg-gray-50">
-                                    <input type="radio" name="payment_method" value="bank_transfer" class="h-5 w-5 text-primary">
-                                    <span class="ml-3 font-medium">Virement bancaire</span>
-                                </label>
-                                
-                                <label class="flex items-center p-3 border rounded-md hover:bg-gray-50">
-                                    <input type="radio" name="payment_method" value="cash" class="h-5 w-5 text-primary">
-                                    <span class="ml-3 font-medium">Paiement sur place</span>
-                                </label>
+                            <div class="form-control w-full">
+                                <div class="dropdown w-full">
+                                    <div tabindex="0" role="button" class="select select-bordered w-full flex justify-between items-center">
+                                        <span id="selected-payment-text">Carte de crédit</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </div>
+                                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full">
+                                        <li>
+                                            <a data-value="credit_card" class="payment-option active">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                                </svg>
+                                                Carte de crédit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a data-value="bank_transfer" class="payment-option">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+                                                </svg>
+                                                Virement bancaire
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a data-value="cash" class="payment-option">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                                </svg>
+                                                Paiement sur place
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="payment_method" id="payment-method-input" value="credit_card">
                             </div>
                         </div>
 
                         <!-- Préférences -->
-                        <div class="md:col-span-2">
-                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Préférences et demandes spéciales</h2>
+                        <div class="md:col-span-2 mt-6">
+                            <div class="divider">
+                                <h2 class="text-xl font-semibold text-gray-800">Préférences et demandes spéciales</h2>
+                            </div>
                             
-                            <div>
-                                <label for="special_requests" class="block text-sm font-medium text-gray-700 mb-1">Demandes spéciales</label>
-                                <textarea id="special_requests" name="special_requests" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50">{{ $validated['special_requests'] ?? '' }}</textarea>
+                            <div class="form-control w-full">
+                                <label class="label">
+                                    <span class="label-text">Demandes spéciales</span>
+                                </label>
+                                <textarea id="special_requests" name="special_requests" rows="3" class="textarea textarea-bordered w-full">{{ $validated['special_requests'] ?? '' }}</textarea>
                             </div>
                             
                             <div class="mt-4">
-                                <p class="block text-sm font-medium text-gray-700 mb-2">Options supplémentaires</p>
-                                <div class="space-y-2">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" name="breakfast" value="1" class="rounded text-primary border-gray-300 focus:ring-primary/50" {{ isset($validated['breakfast']) ? 'checked' : '' }} data-price="5000">
-                                        <span class="ml-2 text-sm text-gray-700">Petit-déjeuner (5 000 FCFA/séjour)</span>
+                                <p class="label-text mb-2 font-medium">Options supplémentaires</p>
+                                <div class="flex flex-col gap-3">
+                                    <label class="label cursor-pointer justify-start gap-3">
+                                        <input type="checkbox" name="breakfast" value="1" class="checkbox checkbox-primary" {{ isset($validated['breakfast']) ? 'checked' : '' }} data-price="5000">
+                                        <span class="text-sm">Petit-déjeuner (5 000 FCFA/séjour)</span>
                                     </label>
                                     
-                                    <label class="flex items-center">
-                                        <input type="checkbox" name="pets" value="1" class="rounded text-primary border-gray-300 focus:ring-primary/50" {{ isset($validated['pets']) ? 'checked' : '' }} data-price="5000">
-                                        <span class="ml-2 text-sm text-gray-700">Animaux acceptés (5 000 FCFA/séjour)</span>
+                                    <label class="label cursor-pointer justify-start gap-3">
+                                        <input type="checkbox" name="pets" value="1" class="checkbox checkbox-primary" {{ isset($validated['pets']) ? 'checked' : '' }} data-price="5000">
+                                        <span class="text-sm">Animaux acceptés (5 000 FCFA/séjour)</span>
                                     </label>
                                     
-                                    <label class="flex items-center">
-                                        <input type="checkbox" name="late_checkout" value="1" class="rounded text-primary border-gray-300 focus:ring-primary/50" {{ isset($validated['late_checkout']) ? 'checked' : '' }}>
-                                        <span class="ml-2 text-sm text-gray-700">Départ tardif (selon disponibilité)</span>
+                                    <label class="label cursor-pointer justify-start gap-3">
+                                        <input type="checkbox" name="late_checkout" value="1" class="checkbox checkbox-primary" {{ isset($validated['late_checkout']) ? 'checked' : '' }}>
+                                        <span class="text-sm">Départ tardif (selon disponibilité)</span>
                                     </label>
                                     
-                                    <label class="flex items-center">
-                                        <input type="checkbox" name="airport_transfer" value="1" class="rounded text-primary border-gray-300 focus:ring-primary/50" {{ isset($validated['airport_transfer']) ? 'checked' : '' }}>
-                                        <span class="ml-2 text-sm text-gray-700">Transfert aéroport (supplément)</span>
+                                    <label class="label cursor-pointer justify-start gap-3">
+                                        <input type="checkbox" name="airport_transfer" value="1" class="checkbox checkbox-primary" {{ isset($validated['airport_transfer']) ? 'checked' : '' }}>
+                                        <span class="text-sm">Transfert aéroport (supplément)</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Termes et conditions -->
-                        <div class="md:col-span-2 mt-4">
-                            <label class="flex items-start">
-                                <input type="checkbox" name="terms_accepted" class="rounded text-primary border-gray-300 focus:ring-primary/50 mt-1" required>
-                                <span class="ml-2 text-sm text-gray-700">
-                                    J'accepte les <a href="#" class="text-primary hover:underline">termes et conditions</a> et la <a href="#" class="text-primary hover:underline">politique de confidentialité</a>
+                        <div class="md:col-span-2 mt-6">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                <input type="checkbox" name="terms_accepted" class="checkbox checkbox-primary" required>
+                                <span class="text-sm">
+                                    J'accepte les <a href="#" class="link link-primary">termes et conditions</a> et la <a href="#" class="link link-primary">politique de confidentialité</a>
                                 </span>
                             </label>
                             @error('terms_accepted')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                <p class="text-error text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
                     
-                    <!-- Ajouter une section récapitulative des prix -->
-                    <div class="mt-8 p-4 bg-gray-50 rounded-md">
-                        <h3 class="text-lg font-medium mb-3">Récapitulatif du prix</h3>
+                    <!-- Récapitulatif des prix -->
+                    <div class="mt-8 card bg-base-200 p-4 shadow-sm">
+                        <h3 class="card-title mb-3">Récapitulatif du prix</h3>
                         
                         <div class="space-y-2 text-sm">
                             <div class="flex justify-between">
@@ -230,17 +365,17 @@
                                 <span>1 000 FCFA</span>
                             </div>
                             
-                            <div class="border-t border-gray-200 pt-2 mt-2">
-                                <div class="flex justify-between font-medium">
-                                    <span>Prix total</span>
-                                    <span id="total-price"></span>
-                                </div>
+                            <div class="divider my-1"></div>
+                            
+                            <div class="flex justify-between font-medium text-lg">
+                                <span>Prix total</span>
+                                <span id="total-price" class="badge badge-lg badge-primary text-base-100"></span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex justify-end">
-                        <button type="submit" class="px-6 py-3 bg-primary text-white rounded-md shadow-md hover:bg-primary/90 transition">
+                    <div class="flex justify-end mt-6">
+                        <button type="submit" class="btn btn-primary">
                             Confirmer la réservation
                         </button>
                     </div>
@@ -252,6 +387,7 @@
     @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Code existant pour le calcul du prix
             const breakfastCheckbox = document.querySelector('input[name="breakfast"]');
             const petsCheckbox = document.querySelector('input[name="pets"]');
             const breakfastPriceRow = document.getElementById('breakfast-price-row');
@@ -292,6 +428,69 @@
             
             // Calculer le prix initial
             updateTotalPrice();
+            
+            // Nouvelle gestion des dropdowns personnalisés
+            
+            // Dropdown pour la sélection de chambre
+            const roomOptions = document.querySelectorAll('.room-option');
+            const selectedRoomText = document.getElementById('selected-room-text');
+            const roomIdInput = document.getElementById('room-id-input');
+            
+            if (roomOptions.length > 0) {
+                roomOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        const value = this.getAttribute('data-value');
+                        const text = this.textContent;
+                        
+                        roomIdInput.value = value;
+                        selectedRoomText.textContent = text;
+                        
+                        // Mise à jour de l'état actif
+                        roomOptions.forEach(opt => opt.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+            }
+            
+            // Dropdown pour la civilité
+            const titleOptions = document.querySelectorAll('.title-option');
+            const selectedTitleText = document.getElementById('selected-title-text');
+            const titleInput = document.getElementById('title-input');
+            
+            titleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    const text = this.textContent;
+                    
+                    titleInput.value = value;
+                    selectedTitleText.textContent = text;
+                    
+                    // Mise à jour de l'état actif
+                    titleOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    document.activeElement.blur();
+                });
+            });
+            
+            // Dropdown pour le mode de paiement
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const selectedPaymentText = document.getElementById('selected-payment-text');
+            const paymentMethodInput = document.getElementById('payment-method-input');
+            
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    const text = this.textContent.trim();
+                    
+                    paymentMethodInput.value = value;
+                    selectedPaymentText.textContent = text;
+                    
+                    // Mise à jour de l'état actif
+                    paymentOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    document.activeElement.blur();
+                });
+            });
         });
     </script>
     @endpush

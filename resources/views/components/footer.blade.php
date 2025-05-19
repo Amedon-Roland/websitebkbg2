@@ -5,13 +5,13 @@
         {{-- Newsletter (premier élément en mobile) --}}
         <div class="mb-10">
             <h3 class="font-bold text-lg mb-3">Newsletter</h3>
-            <p class="text-sm mb-5">
+            <p class="text-sm opacity-90 mb-5">
                 Veuillez vous abonner à notre newsletter pour recevoir les dernières offres sur nos chambres et nos vacances à prix réduit.
             </p>
             <form action="#" method="POST" class="flex flex-col">
-                <div class="flex items-center overflow-hidden rounded-md bg-white w-full">
-                    <input type="email" placeholder="Entrer votre email" class="flex-grow focus:outline-none bg-white p-3 pl-4 text-black w-full">
-                    <button type="submit" class="bg-[#0C4E99] text-white px-6 py-3 whitespace-nowrap">S'abonner</button>
+                <div class="join w-full">
+                    <input type="email" placeholder="Entrer votre email" class="input join-item w-full text-black" />
+                    <button type="submit" class="btn btn-primary join-item">S'abonner</button>
                 </div>
             </form>
         </div>
@@ -19,37 +19,53 @@
         {{-- Deux colonnes pour les liens --}}
         <div class="grid grid-cols-2 gap-8 mb-10">
             {{-- Liens rapides --}}
-            <div class="pl-1">
+            <div>
                 <h3 class="font-bold text-lg mb-3">Liens rapides</h3>
-                <ul class="space-y-3">
-                    <li><a href="#" class="text-sm">Réservation de salle</a></li>
-                    <li><a href="#" class="text-sm">Chambres</a></li>
-                    <li><a href="#" class="text-sm">Contact</a></li>
-                    <li><a href="#" class="text-sm">Explorer</a></li>
+                <ul class="menu menu-sm p-0 opacity-90">
+                    <li><a class="hover:bg-transparent hover:text-primary transition-colors">Réservation de salle</a></li>
+                    <li><a class="hover:bg-transparent hover:text-primary transition-colors">Chambres</a></li>
+                    <li><a class="hover:bg-transparent hover:text-primary transition-colors">Contact</a></li>
+                    <li><a class="hover:bg-transparent hover:text-primary transition-colors">Explorer</a></li>
                 </ul>
             </div>
 
             {{-- Entreprise --}}
-            <div class="pl-1">
+            <div>
                 <h3 class="font-bold text-lg mb-3">Entreprise</h3>
-                <ul class="space-y-3">
-                    <li><a href="#" class="text-sm">politique de confidentialité</a></li>
-                    <li><a href="#" class="text-sm">Politique de remboursement</a></li>
-                    <li><a href="#" class="text-sm">F.A.Q</a></li>
-                    <li><a href="#" class="text-sm">À propos</a></li>
+                <ul class="menu menu-sm p-0 opacity-90">
+                    <li><a class="hover:bg-transparent hover:text-primary transition-colors">Politique de confidentialité</a></li>
+                    <li><a class="hover:bg-transparent hover:text-primary transition-colors">Politique de remboursement</a></li>
+                    <li><a class="hover:bg-transparent hover:text-primary transition-colors">F.A.Q</a></li>
+                    <li><a class="hover:bg-transparent hover:text-primary transition-colors">À propos</a></li>
                 </ul>
             </div>
         </div>
 
         {{-- Réseaux sociaux --}}
-        <div class="mb-14 pl-1">
+        <div class="mb-14">
             <h3 class="font-bold text-lg mb-3">Réseaux sociaux</h3>
-            <ul class="space-y-3">
-                <li><a href="#" class="text-sm">Facebook</a></li>
-                <li><a href="#" class="text-sm">Twitter</a></li>
-                <li><a href="#" class="text-sm">Instagram</a></li>
-                <li><a href="#" class="text-sm">LinkedIn</a></li>
-            </ul>
+            <div class="flex gap-4 mt-4">
+                <a href="#" class="btn btn-circle btn-sm btn-outline text-white hover:bg-white hover:text-secondary transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="h-4 w-4">
+                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                    </svg>
+                </a>
+                <a href="#" class="btn btn-circle btn-sm btn-outline text-white hover:bg-white hover:text-secondary transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="h-4 w-4">
+                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                    </svg>
+                </a>
+                <a href="#" class="btn btn-circle btn-sm btn-outline text-white hover:bg-white hover:text-secondary transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="h-4 w-4">
+                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                    </svg>
+                </a>
+                <a href="#" class="btn btn-circle btn-sm btn-outline text-white hover:bg-white hover:text-secondary transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="h-4 w-4">
+                        <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                    </svg>
+                </a>
+            </div>
         </div>
 
         {{-- Be Kind Be Generous --}}
@@ -58,70 +74,95 @@
         </div>
 
         {{-- Copyright --}}
-        <div class="text-center text-xs pt-1 pb-2">
+        <div class="text-center text-xs pt-1 pb-2 opacity-75">
             <p>BKBG (RolandTech-hatandamso) 2025</p>
         </div>
     </div>
 
     {{-- Version Desktop (visible uniquement sur desktop) --}}
     <div class="hidden md:block">
-        <div class="container pt-15 font-raleway mx-auto flex flex-row items-start justify-between py-10 px-8 md:px-12 gap-10 h-full">
-            {{-- Footer Title --}}
-            <div class="flex-shrink-0 md:w-1/4">
-                <x-footer-title/>
-            </div>
+        <div class="container pt-15 font-raleway mx-auto py-10 px-8 md:px-12">
+            <div class="grid grid-cols-12 gap-8">
+                {{-- Footer Title --}}
+                <div class="col-span-3">
+                    <x-footer-title/>
+                </div>
 
-            {{-- Liens rapides --}}
-            <div class="flex-1 pl-2">
-                <h3 class="font-bold text-lg mb-5">Liens rapides</h3>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="#" class="hover:underline">Réservation de salle</a></li>
-                    <li><a href="#" class="hover:underline">Chambres</a></li>
-                    <li><a href="#" class="hover:underline">Contact</a></li>
-                    <li><a href="#" class="hover:underline">Explorer</a></li>
-                </ul>
-            </div>
+                {{-- Liens rapides --}}
+                <div class="col-span-2">
+                    <h3 class="font-bold text-lg mb-5 border-b border-white/20 pb-2">Liens rapides</h3>
+                    <ul class="menu menu-sm p-0 opacity-90">
+                        <li><a class="hover:bg-transparent hover:text-primary transition-colors px-2">Réservation de salle</a></li>
+                        <li><a class="hover:bg-transparent hover:text-primary transition-colors px-2">Chambres</a></li>
+                        <li><a class="hover:bg-transparent hover:text-primary transition-colors px-2">Contact</a></li>
+                        <li><a class="hover:bg-transparent hover:text-primary transition-colors px-2">Explorer</a></li>
+                    </ul>
+                </div>
 
-            {{-- Entreprise --}}
-            <div class="flex-1 pl-2">
-                <h3 class="font-bold text-lg mb-5">Entreprise</h3>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="#" class="hover:underline">Politique de confidentialité</a></li>
-                    <li><a href="#" class="hover:underline">Politique de remboursement</a></li>
-                    <li><a href="#" class="hover:underline">F.A.Q</a></li>
-                    <li><a href="#" class="hover:underline">À propos</a></li>
-                </ul>
-            </div>
+                {{-- Entreprise --}}
+                <div class="col-span-2">
+                    <h3 class="font-bold text-lg mb-5 border-b border-white/20 pb-2">Entreprise</h3>
+                    <ul class="menu menu-sm p-0 opacity-90">
+                        <li><a class="hover:bg-transparent hover:text-primary transition-colors px-2">Politique de confidentialité</a></li>
+                        <li><a class="hover:bg-transparent hover:text-primary transition-colors px-2">Politique de remboursement</a></li>
+                        <li><a class="hover:bg-transparent hover:text-primary transition-colors px-2">F.A.Q</a></li>
+                        <li><a class="hover:bg-transparent hover:text-primary transition-colors px-2">À propos</a></li>
+                    </ul>
+                </div>
 
-            {{-- Réseaux sociaux --}}
-            <div class="flex-1 pl-2">
-                <h3 class="font-bold text-lg mb-5">Réseaux sociaux</h3>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="#" class="hover:underline">Facebook</a></li>
-                    <li><a href="#" class="hover:underline">Twitter</a></li>
-                    <li><a href="#" class="hover:underline">Instagram</a></li>
-                    <li><a href="#" class="hover:underline">LinkedIn</a></li>
-                </ul>
-            </div>
-
-            {{-- Newsletter --}}
-            <div class="flex-1 pl-2">
-                <h3 class="font-bold text-lg mb-5">Newsletter</h3>
-                <p class="text-sm mb-5">
-                    Abonnez-vous à notre newsletter pour recevoir les dernières offres sur nos chambres et nos vacances à prix réduit.
-                </p>
-                <form action="#" method="POST" class="flex items-center">
-                    <div class="flex items-center bg-white p-1 rounded-[5px] overflow-hidden">
-                        <input type="email" placeholder="Entrez votre email" class="focus:outline-none bg-white p-3 pl-4 text-black w-full md:w-auto">
-                        <button type="submit" class="bg-secondary rounded-[2.5px] text-white px-5 py-2 cursor-pointer">S'abonner</button>
+                {{-- Réseaux sociaux --}}
+                <div class="col-span-2">
+                    <h3 class="font-bold text-lg mb-5 border-b border-white/20 pb-2">Réseaux sociaux</h3>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <a href="#" class="btn btn-sm btn-outline text-white hover:bg-white hover:text-secondary transition-all flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="h-4 w-4">
+                                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                            </svg>
+                            Facebook
+                        </a>
+                        <a href="#" class="btn btn-sm btn-outline text-white hover:bg-white hover:text-secondary transition-all flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="h-4 w-4">
+                                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                            </svg>
+                            Twitter
+                        </a>
+                        <a href="#" class="btn btn-sm btn-outline text-white hover:bg-white hover:text-secondary transition-all flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="h-4 w-4">
+                                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                            </svg>
+                            Instagram
+                        </a>
+                        <a href="#" class="btn btn-sm btn-outline text-white hover:bg-white hover:text-secondary transition-all flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="h-4 w-4">
+                                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
                     </div>
-                </form>
+                </div>
+
+                {{-- Newsletter --}}
+                <div class="col-span-3">
+                    <h3 class="font-bold text-lg mb-5 border-b border-white/20 pb-2">Newsletter</h3>
+                    <p class="text-sm opacity-90 mb-5">
+                        Abonnez-vous à notre newsletter pour recevoir les dernières offres sur nos chambres et nos vacances à prix réduit.
+                    </p>
+                    <form action="#" method="POST">
+                        <div class="join w-full">
+                            <input type="email" placeholder="Entrez votre email" class="input input-sm join-item w-full text-black" />
+                            <button type="submit" class="btn btn-sm btn-primary join-item">S'abonner</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
         {{-- Copyright --}}
-        <div class="border-t border-white text-center py-6">
-            <p class="text-xs">© 2025 Hotel BKBG</p>
+        <div class="border-t border-white/20 text-center py-6">
+            <div class="container mx-auto px-8 flex justify-between items-center">
+                <p class="text-xs opacity-75">© 2025 Hôtel BKBG. Tous droits réservés.</p>
+                <p class="font-dancing text-2xl italic">Be Kind Be Generous</p>
+            </div>
         </div>
     </div>
 </footer>
