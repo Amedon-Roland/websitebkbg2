@@ -10,7 +10,9 @@
                     perfect luxury bedroom design."
     :showScrollButton="false"
 />
+
 <x-contact-form />
+
 <!-- Ajout de la carte Leaflet avec l'emplacement de l'hôtel -->
 <x-leaflet-map 
     latitude="6.16668"
@@ -21,10 +23,5 @@
     phone="+228 91415656"
     email="contact@hotelbkbg.com"
 />
-
-
-
-<!-- Ajout de la carte Leaflet avec l'emplacement de l'hôtel -->
-
 
 @endsection

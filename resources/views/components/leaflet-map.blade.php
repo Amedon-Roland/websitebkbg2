@@ -1,17 +1,17 @@
 @props([
-    'latitude' => 6.16668,
-    'longitude' => 1.33667,
+    'latitude' => 4.053333,
+    'longitude' => 9.765556,
     'zoom' => 15,
     'hotelName' => 'Hôtel BKBG',
-    'address' => 'Quartier Baguida-Bateauvi, Bd du Mono, Lomé, Togo',
-    'phone' => '+228 91415656',
-    'email' => 'contact@hotelbkbg.com',
+    'address' => 'Rue de Limbé, Douala, Cameroun',
+    'phone' => '+237 123 456 789',
+    'email' => 'contact@hotelbkbg.cm',
 ])
 
 <div class="mt-8 mb-12">
     <div class="container mx-auto px-4">
         <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-            <div class="p-6 border-b text-center border-gray-200">
+            <div class="p-6 border-b border-gray-200">
                 <h2 class="text-2xl font-bold text-gray-900">Notre emplacement</h2>
                 <p class="mt-1 text-gray-600">Venez nous retrouver à l'adresse suivante</p>
             </div>
@@ -73,46 +73,84 @@
 @endonce
 
 @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Coordonnées de l'hôtel
-            const hotelLat = {{ $latitude }};
-            const hotelLng = {{ $longitude }};
-            const hotelName = "{{ $hotelName }}";
-            
-            // Initialiser la carte
-            const map = L.map('hotel-map').setView([hotelLat, hotelLng], {{ $zoom }});
-            
-            // Ajouter la couche de tuiles OpenStreetMap
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            
-            // Ajouter un marqueur pour l'hôtel avec une popup
-            const customIcon = L.divIcon({
-                html: `<div class="flex items-center justify-center w-8 h-8 bg-red-600 rounded-full border-2 border-white shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>`,
-                className: '',
-                iconSize: [32, 32],
-                iconAnchor: [16, 16]
-            });
-            L.marker([hotelLat, hotelLng], {icon: customIcon})
-                .addTo(map)
-                .bindPopup(`
-                    <div style="max-width: 220px; word-break: break-word;" class="text-center">
-                        <div class="font-bold text-base mb-1">${hotelName}</div>
-                        <div class="text-sm">${"{{ $address }}".replace(/\\n/g, '<br>')}</div>
-                        <div class="text-sm mt-2 text-red-600">Bienvenue!</div>
-                    </div>
-                `, {
-                    maxWidth: 240,
-                    minWidth: 120,
-                    className: 'leaflet-popup-content-responsive'
-                })
-                .openPopup();
+<script>
+    // Fonction d'initialisation de la carte que nous pourrons réutiliser
+    function initHotelMap() {
+        // Coordonnées spécifiques à cette instance
+        const hotelLat = {{ $latitude }};
+        const hotelLng = {{ $longitude }};
+        const hotelName = "{{ $hotelName }}";
+        const hotelAddress = "{{ $address }}";
+        const zoomLevel = {{ $zoom }};
+        
+        // S'assurer que l'élément existe
+        const mapElement = document.getElementById('hotel-map');
+        if (!mapElement) return;
+        
+        // Initialiser la carte
+        const map = L.map('hotel-map').setView([hotelLat, hotelLng], zoomLevel);
+        
+        // Stocker la référence de la carte dans l'élément pour pouvoir la nettoyer plus tard
+        mapElement._leafletMap = map;
+        
+        // Ajouter la couche de tuiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Créer un marqueur personnalisé
+        const customIcon = L.divIcon({
+            html: `<div style="background-color: #dc2626; color: white; width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                  </div>`,
+            className: '',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
         });
-    </script>
+        
+        // Ajouter le marqueur et la popup
+        L.marker([hotelLat, hotelLng], {icon: customIcon})
+            .addTo(map)
+            .bindPopup(`
+                <div style="text-align: center; padding: 5px;">
+                    <div style="font-weight: bold; margin-bottom: 5px;">${hotelName}</div>
+                    <div style="font-size: 0.9em;">${hotelAddress}</div>
+                    <div style="color: #dc2626; margin-top: 5px; font-size: 0.9em;">Bienvenue!</div>
+                </div>
+            `)
+            .openPopup();
+            
+        // Invalidate size après initialisation pour éviter les problèmes d'affichage
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 100);
+        
+        return map;
+    }
+    
+    // Fonction pour nettoyer la carte existante
+    function cleanupMap() {
+        const mapElement = document.getElementById('hotel-map');
+        if (mapElement && mapElement._leafletMap) {
+            mapElement._leafletMap.remove();
+            mapElement._leafletMap = null;
+        }
+    }
+    
+    // Initialiser la carte lors du chargement initial
+    document.addEventListener('DOMContentLoaded', initHotelMap);
+    
+    // Nettoyage et réinitialisation lors de la navigation Livewire
+    document.addEventListener('livewire:navigating', cleanupMap);
+    document.addEventListener('livewire:navigated', function() {
+        // Vérifier si nous sommes sur une page avec une carte
+        if (document.getElementById('hotel-map')) {
+            // Petite temporisation pour s'assurer que le DOM est stable
+            setTimeout(initHotelMap, 100);
+        }
+    });
+</script>
 @endpush
