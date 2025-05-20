@@ -4,48 +4,32 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoomResource\Pages;
 use App\Models\Room;
-use Filament\Forms;
+use App\Models\RoomCategory;
+use App\Models\Reservation;
+use Carbon\Carbon;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables;
+use Filament\Forms;
 
 class RoomResource extends Resource
 {
     protected static ?string $model = Room::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-home';
-
-    protected static ?string $navigationGroup = 'Hôtel Management';
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('room_category_id')
+                    ->label('Room Category')
+                    ->options(RoomCategory::all()->pluck('name', 'id'))
+                    ->required(),
                 Forms\Components\TextInput::make('room_number')
-                    ->numeric()
-                    ->label('Room Number'),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->directory('rooms')
-                    ->label('Room Image')
-                    ->columnSpanFull(),
-                Forms\Components\Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('price')
                     ->required()
-                    ->numeric()
-                    ->prefix('FCFA'),
-                Forms\Components\TextInput::make('capacity')
-                    ->required()
-                    ->numeric()
-                    ->default(2),
+                    ->numeric(),
                 Forms\Components\Toggle::make('is_available')
-                    ->label('Available')
+                    ->label('Is Available')
                     ->default(true),
             ]);
     }
@@ -54,40 +38,78 @@ class RoomResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('room_number')
+                    ->sortable()
+                    ->searchable(),
+                    
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Category')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('price')
-                    ->money('XAF')
-                    ->sortable(),
+                    
                 Tables\Columns\IconColumn::make('is_available')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->boolean()
+                    ->label('Available'),
+                    
+                // Nouvel indicateur d'état avec date de fin de réservation
+                Tables\Columns\TextColumn::make('availability_status')
+    ->label('Status')
+    ->badge()
+    ->getStateUsing(function (Room $record): string {
+        $today = Carbon::today();
+        
+        // Si la chambre est marquée comme disponible
+        if ($record->is_available) {
+            // Vérifier s'il y a des réservations futures mais pas imminentes
+            $futureReservation = Reservation::where('room_id', $record->id)
+                ->where('status', '!=', 'cancelled')
+                ->where('check_in_date', '>', $today->copy()->addDay())
+                ->orderBy('check_in_date')
+                ->first();
+                
+            if ($futureReservation) {
+                return 'Libre jusqu\'au ' . Carbon::parse($futureReservation->check_in_date)->subDay()->format('d/m/Y');
+            }
+            
+            return 'Libre';
+        }
+        
+        // Si la chambre est occupée
+        $activeReservation = Reservation::where('room_id', $record->id)
+            ->where('status', '!=', 'cancelled')
+            ->where('check_out_date', '>', $today)
+            ->orderBy('check_out_date')
+            ->first();
+            
+        if ($activeReservation) {
+            return 'Occupée jusqu\'au ' . Carbon::parse($activeReservation->check_out_date)->format('d/m/Y');
+        }
+        
+        return 'Indisponible';
+    })
+    ->color(function (string $state): string {
+        if ($state === 'Libre') {
+            return 'success';
+        }
+        
+        if (str_contains($state, 'Libre jusqu\'au')) {
+            return 'info';
+        }
+        
+        if (str_contains($state, 'Occupée')) {
+            return 'danger';
+        }
+        
+        return 'warning';
+    }),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('is_available')
-                    ->options([
-                        '1' => 'Available',
-                        '0' => 'Not Available',
-                    ]),
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
