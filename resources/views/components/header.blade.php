@@ -64,18 +64,7 @@
                 </div>
             </div>
             
-            {{-- Indicateur de connexion (conditionnel) --}}
-            @auth
-                <div class="hidden md:flex items-center">
-                    <div class="tooltip tooltip-bottom" data-tip="Connecté">
-                        <div class="avatar online placeholder">
-                            <div class="bg-primary text-white rounded-full w-8">
-                                <span class="text-xs">{{ substr(Auth::user()->name, 0, 2) }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endauth
+           
 
             {{-- Bouton du menu mobile avec animation --}}
             <div class="lg:hidden">
